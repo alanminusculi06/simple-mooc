@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class="splash">
+    <div class="pure-g-r">
+        <div class="pure-u-1">
+            <div class="l-box splash-text">
+                <h1 class="splash-head">
+                    Uma Simples Plataforma de Ensino a Distância
+                </h1>
+                <h2 class="splash-subhead">
+                    O Simple MOOC visa simplificar o ensino a distância, provendo ferramentas objetivas e de
+                    fácil uso para cursos a distância.
+                </h2>
+                <p>
+                    <a href="#" class="pure-button primary-button">Saiba mais</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <h4 class="content-subhead">Listagem de Cursos do SimpleMOOC</h4>
+            <p>Abaixo a lista de cursos disponíveis na plataforma</p>
+        </div>
+    </div>
+</div>
+{% for course in courses %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1-3">
+        <div class="l-box">
+            <a href="{{ course.get_absolute_url }}">
+                {% if course.image %}
+                <img width="400" height="250" src="{{ course.image.url }}" alt="{{ course }}">
+                {% else %}
+                <img src="{% static 'img/course-400_250.PNG' %}" alt="{{ course }}">
+                {% endif %}
+            </a>
+        </div>
+    </div>
+    <div class="pure-u-2-3">
+        <div class="l-box">
+            <h4 class="content-subhead"><a href="{{ course.get_absolute_url }}">{{ course.name }}</a></h4>
+            {{ course.description|linebreaks }}
+        </div>
+    </div>
+</div>
+{% empty %}
+<div class="pure-g-r content-ribbon">
+    <div class="pure-u-1">
+        <div class="l-box">
+            <h4 class="content-subhead">Não temos nenhum curso disponível no momento.</p>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
