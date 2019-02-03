@@ -3,16 +3,9 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
 }
-html {
-    height: 100%;
-    box-sizing: border-box;
-  }
-body {    
+body {
+    margin: 0 auto;
     line-height: 1.7em;
-    position: relative;
-    margin: 0;
-    padding-bottom: 6rem;
-    min-height: 100%;
 }
 a {
     color: #3b8bba;
@@ -122,13 +115,9 @@ body .primary-button {
 .footer {
     background: #2d3e50;
     color: #fff;
-    text-align: center;    
+    text-align: center;
+    padding: 1em;
     font-size: 80%;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    padding: 1rem;        
 }
 ul.errorlist {
     margin: 0;
@@ -192,4 +181,13 @@ ul.breadcrumb li {
 ul.breadcrumb li a {
     display: inline-block;
     padding: 0.3em 0.7em;
+}
+aside {
+    background: #1f8dd6;
+    padding: 0.3em 1em;
+    border-radius: 3px;
+    color: #fff;
+}
+aside p {
+    margin: 0.4em 0;
 }
