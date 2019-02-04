@@ -1,12 +1,10 @@
 {% extends "base.html" %}
 
-{% load static %}
-
 {% block content %}
 <div class="pure-g-r content-ribbon">
     <div class="pure-u-1">
         <h2>Informe seus dados de cadastro</h2>
-        <form class="pure-form pure-form-aligned" method="POST">
+        <form class="pure-form pure-form-stacked" method="post">
             {% csrf_token %}
             <fieldset>
                 {{ form.non_field_errors }}
@@ -15,7 +13,7 @@
                 <div class="pure-control-group">
                     {{ field.label_tag }}
                     {{ field }}
-                    {{ field.errors}}
+                    {{ field.errors }}
                 </div>
                 {% endfor %}
 
@@ -23,8 +21,10 @@
                     <button type="submit" class="pure-button pure-button-primary">Entrar</button>
                 </div>
             </fieldset>
-            <p><a href="{% url 'accounts:register' %}" title="Cadastre-se">Cadastre-se</a></p>
-            <p><a href="{% url 'accounts:password_reset' %}" title="Redefinir senha">Redefina a senha</a></p>
+            <p>
+                Não é cadastrado? <a href="{% url 'accounts:register' %}" title="">Cadastre-se</a> <br />
+                Esqueceu a senha? <a href="{% url 'accounts:password_reset' %}" title="">Nova senha</a> <br />
+            </p>
         </form>
     </div>
 </div>
