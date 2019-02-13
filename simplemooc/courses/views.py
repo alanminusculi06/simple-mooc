@@ -77,5 +77,8 @@ def announcements(request, slug):
             messages.error(request, 'A sua incrição está pendente.')
             return redirect('accounts:dashboard')
     template_name = 'announcements.html'
-    context = {}
+    context = {
+        'course': course,
+        'announcements': course.announcements.all()
+    }
     return render(request, template_name, context)
