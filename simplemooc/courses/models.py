@@ -2,6 +2,7 @@ from django.db import models
 from django.urls import reverse
 from django.conf import settings
 from simplemooc.core.mail import send_mail_template
+from django.utils import timezone
 
 
 class CourseManager(models.Manager):
@@ -31,10 +32,60 @@ class Course(models.Model):
     def get_absolute_url(self):
         return reverse('courses:detail', kwargs={'slug': self.slug})
 
+    def release_lessons(self):
+        today = timezone.now().date()
+        return self.lessons.filter(release_date__gte=today)
+
     class Meta:
         verbose_name = "Curso"
         verbose_name_plural = "Cursos"
         ordering = ['name']
+
+
+class Lesson(models.Model):
+    name = models.CharField('Nome', max_length=100)
+    description = models.TextField('Descrição', blank=True)
+    number = models.IntegerField('Ordem', blank=True, default=0)
+    release_date = models.DateField('Data de liberação', blank=True, null=True)
+    course = models.ForeignKey(
+        Course, verbose_name='Curso', related_name='lessons', on_delete=models.CASCADE)
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+    def is_available(self):
+        if self.release_date:
+            today = timezone.now().date()
+            return self.release_date >= today
+        return False
+
+    class Meta:
+        verbose_name = 'Aula'
+        verbose_name_plural = 'Aulas'
+        ordering = ['number']
+
+
+class Material(models.Model):
+    name = models.CharField('Nome', max_length=100)
+    embedded = models.TextField('Mídia embarcada', blank=True)
+    material_file = models.FileField(
+        upload_to='lessons/materials', blank=True, null=True)
+    lesson = models.ForeignKey(
+        Lesson, related_name='materials', verbose_name='Aula', on_delete=models.CASCADE)
+    created_at = models.DateTimeField('Criado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+
+    def is_embedded(self):
+        return bool(self.embedded)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = 'Material'
+        verbose_name_plural = 'Materiais'
 
 
 class Enrollment(models.Model):
@@ -80,9 +131,9 @@ class Enrollment(models.Model):
 
 class Announcement(models.Model):
     course = models.ForeignKey(
-        Course, 
+        Course,
         verbose_name='Curso',
-        on_delete=models.CASCADE, 
+        on_delete=models.CASCADE,
         related_name='announcements'
     )
     title = models.CharField('Título', max_length=100)
@@ -101,15 +152,15 @@ class Announcement(models.Model):
 
 class Comment(models.Model):
     announcement = models.ForeignKey(
-        Announcement, 
-        verbose_name='Anúncio', 
-        on_delete=models.CASCADE, 
+        Announcement,
+        verbose_name='Anúncio',
+        on_delete=models.CASCADE,
         related_name='comments'
     )
     user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, 
-        on_delete=models.CASCADE, 
-        verbose_name='Usuário', 
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        verbose_name='Usuário',
         related_name='usuario'
     )
     comment = models.TextField('Comentário')
@@ -124,6 +175,7 @@ class Comment(models.Model):
         verbose_name_plural = 'Comentários'
         ordering = ['-created_at']
 
+
 def post_save_announcement(instance, created, **kwargs):
     if created:
         subject = instance.title
@@ -137,6 +189,7 @@ def post_save_announcement(instance, created, **kwargs):
         for enrollment in enrollments:
             recipient_list = [enrollment.user.email]
             send_mail_template(subject, template_name, context, recipient_list)
+
 
 models.signals.post_save.connect(
     post_save_announcement, sender=Announcement,
