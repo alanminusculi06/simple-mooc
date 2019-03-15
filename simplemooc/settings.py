@@ -1,5 +1,4 @@
 import os
-import dj_database_url
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'c%h0$imd1^71hjjjj&tp6yq!)b-e*jk7^ji^8(v8$l)f3wjah#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -123,20 +122,3 @@ LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
 LOGIN_REDIRECT_URL = 'core:home'
 AUTH_USER_MODEL = 'accounts.User'
-
-# Heroku Settings
-DATABASES['default'] = dj_database_url.config()
-
-# Honor the 'X-Forwareded-Proto' header for request.is_secure()
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-
-# Allow all host headers
-ALLOWED_HOSTS = ['*']
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
-
-# Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
