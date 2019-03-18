@@ -50,7 +50,7 @@ class Lesson(models.Model):
     course = models.ForeignKey(
         Course, verbose_name='Curso', related_name='lessons', on_delete=models.CASCADE)
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
-    updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     def __str__(self):
         return self.name
@@ -75,7 +75,7 @@ class Material(models.Model):
     lesson = models.ForeignKey(
         Lesson, related_name='materials', verbose_name='Aula', on_delete=models.CASCADE)
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
-    updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     def is_embedded(self):
         return bool(self.embedded)
@@ -111,7 +111,7 @@ class Enrollment(models.Model):
     status = models.IntegerField(
         'Situação', choices=STATUS_CHOICES, default=0, blank=True)
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
-    updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     def active(self):
         self.status = 1
@@ -139,7 +139,7 @@ class Announcement(models.Model):
     title = models.CharField('Título', max_length=100)
     content = models.TextField('Conteúdo')
     created_at = models.DateTimeField('Criado em', auto_now_add=True)
-    updated_at = models.DateTimeField('Atualizado em', auto_now_add=True)
+    updated_at = models.DateTimeField('Atualizado em', auto_now=True)
 
     def __str__(self):
         return self.title
