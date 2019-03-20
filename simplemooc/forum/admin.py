@@ -7,7 +7,7 @@ class ThreadAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('title',)}
 
 class ReplyAdmin(admin.ModelAdmin):
-    list_display = ['thread', 'author', 'created_at', 'updated_at']
+    list_display = ['thread', 'author', 'correct', 'created_at', 'updated_at']
     search_fields = ['thread__title', 'author__email', 'message']
 
 admin.site.register(Thread, ThreadAdmin)
