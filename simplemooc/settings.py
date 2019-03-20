@@ -106,7 +106,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')
 MEDIA_URL = '/media/'
 
@@ -132,5 +131,24 @@ LOGOUT_URL = 'accounts:logout'
 LOGIN_REDIRECT_URL = 'core:home'
 AUTH_USER_MODEL = 'accounts.User'
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
+# Heroku settings
+
+import dj_database_url
+
+DATABASES = {
+    'default':  dj_database_url.config(),
+}
+
+# Honor the 'X-Forwarded-Proto' header for request.is_secure()
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Allow all host headers
+ALLOWED_HOSTS = ['*']
+
+STATIC_ROOT = 'staticfiles'
+STATIC_URL = '/static/'
+
+try:
+    from simplemooc.local_settings import *
+except ImportError:
+    pass
