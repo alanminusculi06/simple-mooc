@@ -41,7 +41,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware'
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'simplemooc.urls'
@@ -87,18 +87,28 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/2.0/topics/i18n/
 LANGUAGE_CODE = 'pt-Br'
-TIME_ZONE = 'America/Sao_Paulo'
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
 
+TIME_ZONE = 'America/Sao_Paulo'
+
+USE_I18N = True
+
+USE_L10N = True
+
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 MEDIA_ROOT = os.path.join(BASE_DIR, 'simplemooc', 'media')
 MEDIA_URL = '/media/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
 
-#EMAIL
+# Extra places for collectstatic to find static files.
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+# EMAIL
 #EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 DEFAULT_FROM_EMAIL = 'Alan <alan.m182@gmail.com>'
@@ -109,7 +119,7 @@ EMAIL_HOST_PASSWORD = '123456'
 EMAIL_PORT = 587
 CONTACT_EMAIL = 'alan.m182@gmail.com'
 
-#Auth
+# Auth
 LOGIN_URL = 'accounts:login'
 LOGOUT_URL = 'accounts:logout'
 LOGIN_REDIRECT_URL = 'core:home'
@@ -127,16 +137,11 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 # Allow all host headers
 ALLOWED_HOSTS = ['aqueous-fortress-64632.herokuapp.com', '.herokuapp.com']
 
-# Static files
-STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
-STATIC_URL = '/static/'
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-# Extra places for collectstatic to find static files.
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
-# )
 
-# COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+# Simplified static file serving.
+# https://warehouse.python.org/project/whitenoise/
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
