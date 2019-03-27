@@ -15,7 +15,7 @@ SECRET_KEY = 'c%h0$imd1^71hjjjj&tp6yq!)b-e*jk7^ji^8(v8$l)f3wjah#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
 # Application definition
 
@@ -135,7 +135,10 @@ DATABASES = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    'localhost',
+    '.herokuapp.com'
+]
 
 
 # Simplified static file serving.
