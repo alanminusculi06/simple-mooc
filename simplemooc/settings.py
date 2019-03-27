@@ -16,8 +16,6 @@ SECRET_KEY = 'c%h0$imd1^71hjjjj&tp6yq!)b-e*jk7^ji^8(v8$l)f3wjah#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 TEMPLATE_DEBUG = False
-ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
@@ -65,17 +63,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'simplemooc.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/2.0/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
 
 
 # Password validation
@@ -133,6 +120,8 @@ AUTH_USER_MODEL = 'accounts.User'
 # Activate Django-Heroku.
 django_heroku.settings(locals())
 
+DATABASES['default'] =  dj_database_url.config()
+
 DATABASES = {
     'default':  dj_database_url.config(),
 }
@@ -142,6 +131,8 @@ SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
 ALLOWED_HOSTS = ['*']
+
+# Static files
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'staticfiles'))
 STATIC_URL = '/static/'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
@@ -149,6 +140,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
 # )
+
 try:
     from simplemooc.local_settings import *
 except ImportError:
