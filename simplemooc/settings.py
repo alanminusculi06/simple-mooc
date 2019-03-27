@@ -117,9 +117,6 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # Heroku settings
 
-# Activate Django-Heroku.
-django_heroku.settings(locals())
-
 DATABASES['default'] =  dj_database_url.config()
 
 DATABASES = {
@@ -142,6 +139,9 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # )
 
 COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
 try:
     from simplemooc.local_settings import *
