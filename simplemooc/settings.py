@@ -135,11 +135,13 @@ ALLOWED_HOSTS = ['.herokuapp.com']
 # Static files
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
 STATIC_URL = '/static/'
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Extra places for collectstatic to find static files.
 # STATICFILES_DIRS = (
 #     os.path.join(BASE_DIR, 'static'),
 # )
+
+COMPRESS_ENABLED = os.environ.get('COMPRESS_ENABLED', False)
 
 try:
     from simplemooc.local_settings import *
