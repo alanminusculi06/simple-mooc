@@ -117,8 +117,6 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # Heroku settings
 
-DATABASES['default'] =  dj_database_url.config()
-
 DATABASES = {
     'default':  dj_database_url.config(),
 }
