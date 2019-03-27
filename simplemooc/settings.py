@@ -130,7 +130,7 @@ DATABASES = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['186.209.200.193']
+ALLOWED_HOSTS = ['*']
 
 # Static files
 STATIC_ROOT = os.path.normpath(os.path.join(BASE_DIR, 'static'))
