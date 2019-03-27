@@ -135,7 +135,7 @@ DATABASES = {
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Allow all host headers
-ALLOWED_HOSTS = ['aqueous-fortress-64632.herokuapp.com', '.herokuapp.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Simplified static file serving.
